@@ -10,6 +10,7 @@ public class TesteBusinessRules {
 
     private WebDriver driver;
     private DSL dsl;
+    private CampoTreinamentoPage page;
 
     @Before
     public void initializerWebDriver() {
@@ -17,6 +18,7 @@ public class TesteBusinessRules {
         driver.manage().window().setSize(new Dimension(300, 300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
+        page = new CampoTreinamentoPage(driver);
     }
 
     @After
@@ -26,96 +28,88 @@ public class TesteBusinessRules {
 
     @Test
     public void testFieldName() {
-        dsl.clickButton("elementosForm:cadastrar");
+        page.clickButtonCadastrar();
         Assert.assertEquals("Nome eh obrigatorio", dsl.getTextAlertAccept());
     }
 
     @Test
     public void testFieldSurname() {
-        dsl.write("elementosForm:nome", "Matheus");
-        dsl.clickButton("elementosForm:cadastrar");
+        page.setName("Matheus");
+        page.clickButtonCadastrar();
         Assert.assertEquals("Sobrenome eh obrigatorio", dsl.getTextAlertAccept());
     }
 
     @Test
     public void testFieldSex() {
-        dsl.write("elementosForm:nome", "Matheus");
-        dsl.write("elementosForm:sobrenome", "Carvalho");
-        dsl.clickButton("elementosForm:cadastrar");
+        page.setName("Matheus");
+        page.setSurname("Carvalho");
+        page.clickButtonCadastrar();
         Assert.assertEquals("Sexo eh obrigatorio", dsl.getTextAlertAccept());
     }
 
     @Test
     public void testFieldFavoriteFood() {
-        dsl.write("elementosForm:nome", "Matheus");
-        dsl.write("elementosForm:sobrenome", "Carvalho");
-        dsl.clickRadioButton("elementosForm:sexo:0");
-
-        dsl.clickRadioButton("elementosForm:comidaFavorita:0");
-        dsl.clickRadioButton("elementosForm:comidaFavorita:3");
-
-        dsl.clickButton("elementosForm:cadastrar");
+        page.setName("Matheus");
+        page.setSurname("Carvalho");
+        page.setSexMale();
+        page.setFoodCarne();
+        page.setFoodVegetarian();
+        page.clickButtonCadastrar();
 
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", dsl.getTextAlertAccept());
 
         dsl.quitFrame();
 
         // limpando campos
-        dsl.clickRadioButton("elementosForm:comidaFavorita:0");
-        dsl.clickRadioButton("elementosForm:comidaFavorita:3");
+        page.setFoodCarne();
+        page.setFoodVegetarian();
 
         // novo teste
-        dsl.clickRadioButton("elementosForm:comidaFavorita:1");
-        dsl.clickRadioButton("elementosForm:comidaFavorita:3");
+        page.setFoodFrango();
+        page.setFoodVegetarian();
 
-        dsl.clickButton("elementosForm:cadastrar");
+        page.clickButtonCadastrar();
 
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", dsl.getTextAlertAccept());
     }
 
     @Test
     public void testFieldSportsPracticed() {
-        dsl.write("elementosForm:nome", "Matheus");
-        dsl.write("elementosForm:sobrenome", "Carvalho");
-        dsl.clickRadioButton("elementosForm:sexo:0");
+        page.setName("Matheus");
+        page.setSurname("Carvalho");
+        page.setSexMale();
+        page.setFoodCarne();
 
-        dsl.clickRadioButton("elementosForm:comidaFavorita:1");
-
-        dsl.selectComboBoxOption("elementosForm:esportes", "Natacao");
-        dsl.selectComboBoxOption("elementosForm:esportes", "O que eh esporte?");
-
-        dsl.clickButton("elementosForm:cadastrar");
+        page.setSport("Natacao", "O que eh esporte?");
+        page.clickButtonCadastrar();
 
         Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
 
         dsl.quitFrame();
 
-        dsl.deselectComboBoxOption("elementosForm:esportes", "Natacao");
-
-        dsl.selectComboBoxOption("elementosForm:esportes", "Futebol");
-        dsl.clickButton("elementosForm:cadastrar");
+        page.removeSport("Natacao");
+        page.setSport("Futebol");
+        page.clickButtonCadastrar();
 
         Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
 
         dsl.quitFrame();
 
-        dsl.deselectComboBoxOption("elementosForm:esportes", "Futebol");
-
-        dsl.selectComboBoxOption("elementosForm:esportes", "Corrida");
-        dsl.clickButton("elementosForm:cadastrar");
-
-        Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
-        dsl.quitFrame();
-
-        dsl.deselectComboBoxOption("elementosForm:esportes", "Corrida");
-
-        dsl.selectComboBoxOption("elementosForm:esportes", "Karate");
-        dsl.clickButton("elementosForm:cadastrar");
+        page.removeSport("Futebol");
+        page.setSport("Corrida");
+        page.clickButtonCadastrar();
 
         Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
         dsl.quitFrame();
 
-        dsl.deselectComboBoxOption("elementosForm:esportes", "Karate");
+        page.removeSport("Corrida");
+        page.setSport("Karate");
+        page.clickButtonCadastrar();
+
+        Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
+        dsl.quitFrame();
+
+        page.removeSport("Karate");
     }
 
 

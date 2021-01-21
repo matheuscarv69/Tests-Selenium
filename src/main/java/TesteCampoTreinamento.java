@@ -14,6 +14,7 @@ public class TesteCampoTreinamento {
 
     private WebDriver driver;
     private DSL dsl;
+    private CampoTreinamentoPage page;
 
     @Before
     public void initializerWebDriver() {
@@ -21,6 +22,7 @@ public class TesteCampoTreinamento {
         driver.manage().window().setSize(new Dimension(300, 300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
+        page = new CampoTreinamentoPage(driver);
     }
 
     @After
