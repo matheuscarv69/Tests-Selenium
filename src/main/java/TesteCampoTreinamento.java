@@ -2,9 +2,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Arrays;
@@ -19,7 +17,7 @@ public class TesteCampoTreinamento {
     @Before
     public void initializerWebDriver() {
         driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
+        driver.manage().window().setSize(new Dimension(300,300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
         page = new CampoTreinamentoPage(driver);
@@ -27,7 +25,7 @@ public class TesteCampoTreinamento {
 
     @After
     public void finalizeWebDriver() {
-        driver.quit();
+//        driver.quit();
     }
 
     @Test
@@ -104,6 +102,18 @@ public class TesteCampoTreinamento {
     public void testeBuscarTexto() {
         Assert.assertEquals("Campo de Treinamento", dsl.getTextComponent(By.tagName("h3")));
         Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.getTextComponent(By.className("facilAchar")));
+    }
+
+    @Test
+    public void testJavascript() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("alert('Testando Js via selenium')");
+        js.executeScript("document.getElementById('elementosForm:nome').value = 'Escrito via Js'");
+        js.executeScript("document.getElementById('elementosForm:sobrenome').type = 'radio'");
+
+        WebElement element = driver.findElement(By.id("elementosForm:nome"));
+        js.executeScript("arguments[0].style.border = arguments[1]", element, "solid 4px red");
+
     }
 
 
