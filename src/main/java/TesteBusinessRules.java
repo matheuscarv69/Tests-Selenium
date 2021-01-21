@@ -39,5 +39,23 @@ public class TesteBusinessRules {
         driver.quit();
     }
 
+    @Test
+    public void testFieldSex() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(300, 300));
+        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+        driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
+        driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
+
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        Alert alert = driver.switchTo().alert();
+        Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
+        alert.accept();
+
+        driver.quit();
+    }
+
 
 }
