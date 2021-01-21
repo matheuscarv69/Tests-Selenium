@@ -3,7 +3,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,12 +10,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class TesteAlert {
 
     private WebDriver driver;
+    private DSL dsl;
 
     @Before
     public void initializerWebDriver() {
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(300, 300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL(driver);
     }
 
     @After
@@ -26,7 +27,7 @@ public class TesteAlert {
 
     @Test
     public void testeAlertSimples() {
-        driver.findElement(By.id("alert")).click();
+        dsl.clickButton("alert");
 
         Alert alert = driver.switchTo().alert();
 
@@ -35,12 +36,12 @@ public class TesteAlert {
         Assert.assertEquals("Alert Simples", messageAlert);
         alert.accept();
 
-        driver.findElement(By.id("elementosForm:nome")).sendKeys(messageAlert);
+        dsl.write("elementosForm:nome", messageAlert);
     }
 
     @Test
     public void testeAlertConfirm() {
-        driver.findElement(By.id("confirm")).click();
+        dsl.clickButton("confirm");
         Alert alertConfirm = driver.switchTo().alert();
         Assert.assertEquals("Confirm Simples", alertConfirm.getText());
         alertConfirm.accept();
@@ -50,7 +51,7 @@ public class TesteAlert {
         alertConfirm2.accept();
 
         // Cancelar Alert
-        driver.findElement(By.id("confirm")).click();
+        dsl.clickButton("confirm");
         alertConfirm = driver.switchTo().alert();
         Assert.assertEquals("Confirm Simples", alertConfirm.getText());
         alertConfirm.dismiss();
@@ -62,7 +63,7 @@ public class TesteAlert {
 
     @Test
     public void testeAlertPrompt() {
-        driver.findElement(By.id("prompt")).click();
+        dsl.clickButton("prompt");
 
         Alert alert = driver.switchTo().alert();
         Assert.assertEquals("Digite um numero", alert.getText());
@@ -74,7 +75,7 @@ public class TesteAlert {
         Assert.assertEquals(":D", alert.getText());
         alert.accept();
 
-        driver.findElement(By.id("prompt")).click();
+        dsl.clickButton("prompt");
 
         alert = driver.switchTo().alert();
         Assert.assertEquals("Digite um numero", alert.getText());

@@ -7,13 +7,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TesteWindows {
+
     private WebDriver driver;
+    private DSL dsl;
 
     @Before
     public void initializerWebDriver() {
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(300, 300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL(driver);
     }
 
     @After
@@ -24,30 +27,30 @@ public class TesteWindows {
     // janela com identificador
     @Test
     public void testWindowEasy() {
-        driver.findElement(By.id("buttonPopUpEasy")).click();
+        dsl.clickButton("buttonPopUpEasy");
 
         driver.switchTo().window("Popup");
-        driver.findElement(By.tagName("textarea")).sendKeys("Deu certo! Popup easy");
+        dsl.write(By.tagName("textarea"), "Deu certo! Popup easy");
         String msg = driver.findElement(By.tagName("textarea")).getTagName();
         msg.concat(" da popup");
 
         driver.close();
         driver.switchTo().window("");
 
-        driver.findElement(By.tagName("textarea")).sendKeys("Janela principal\n\n" + msg);
+        dsl.write(By.tagName("textarea"), "Janela principal\n\n" + msg);
     }
 
     // janela sem identificador
     @Test
     public void testWindowHard() {
-        driver.findElement(By.id("buttonPopUpHard")).click();
+        dsl.clickButton("buttonPopUpHard");
 
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
-        driver.findElement(By.tagName("textarea")).sendKeys("Deu certo! Popup hard");
+        dsl.write(By.tagName("textarea"), "Deu certo! Popup hard");
         String msg = driver.findElement(By.tagName("textarea")).getTagName();
         msg.concat(" da popup hard");
 
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
-        driver.findElement(By.tagName("textarea")).sendKeys("Janela principal\n\n" + msg);
+        dsl.write(By.tagName("textarea"), "Janela principal\n\n" + msg);
     }
 }

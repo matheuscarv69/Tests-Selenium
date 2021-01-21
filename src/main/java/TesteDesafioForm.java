@@ -14,12 +14,15 @@ import java.util.List;
 public class TesteDesafioForm {
 
     private WebDriver driver;
+    private DSL dsl;
 
     @Before
     public void initializerWebDriver() {
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(300, 300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL(driver);
+
     }
 
     @After
@@ -29,51 +32,48 @@ public class TesteDesafioForm {
 
     @Test
     public void testeForm() {
-        driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
-        Assert.assertEquals("Matheus", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
+        dsl.write("elementosForm:nome", "Matheus");
+        Assert.assertEquals("Matheus", dsl.getFieldValue("elementosForm:nome"));
 
-        driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
-        Assert.assertEquals("Carvalho", driver.findElement(By.id("elementosForm:sobrenome")).getAttribute("value"));
+        dsl.write("elementosForm:sobrenome", "Carvalho");
+        Assert.assertEquals("Carvalho", dsl.getFieldValue("elementosForm:sobrenome"));
 
-        driver.findElement(By.id("elementosForm:sexo:0")).click();
-        Assert.assertEquals("M", driver.findElement(By.id("elementosForm:sexo:0")).getAttribute("value"));
+        dsl.clickRadioButton("elementosForm:sexo:0");
+        Assert.assertEquals("M", dsl.getFieldValue("elementosForm:sexo:0"));
 
-        driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-        Assert.assertEquals("carne", driver.findElement(By.id("elementosForm:comidaFavorita:0")).getAttribute("value"));
-        driver.findElement(By.id("elementosForm:comidaFavorita:1")).click();
-        Assert.assertEquals("frango", driver.findElement(By.id("elementosForm:comidaFavorita:1")).getAttribute("value"));
-        driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
-        Assert.assertEquals("pizza", driver.findElement(By.id("elementosForm:comidaFavorita:2")).getAttribute("value"));
+        dsl.clickRadioButton("elementosForm:comidaFavorita:0");
+        Assert.assertEquals("carne", dsl.getFieldValue("elementosForm:comidaFavorita:0"));
+        dsl.clickRadioButton("elementosForm:comidaFavorita:1");
+        Assert.assertEquals("frango", dsl.getFieldValue("elementosForm:comidaFavorita:1"));
+        dsl.clickRadioButton("elementosForm:comidaFavorita:2");
+        Assert.assertEquals("pizza", dsl.getFieldValue("elementosForm:comidaFavorita:2"));
 
-        WebElement schoolingLevel = driver.findElement(By.id("elementosForm:escolaridade"));
-        Select level = new Select(schoolingLevel);
-        level.selectByVisibleText("Superior");
-        Assert.assertEquals("Superior", level.getFirstSelectedOption().getText());
+        dsl.selectComboBoxOption("elementosForm:escolaridade", "Superior");
+        Assert.assertEquals("Superior", dsl.getComboBoxOption("elementosForm:escolaridade"));
 
         WebElement sports = driver.findElement(By.id("elementosForm:esportes"));
         Select sportsCombo = new Select(sports);
 
-        sportsCombo.selectByVisibleText("Corrida");
-        sportsCombo.selectByVisibleText("Natacao");
+        dsl.selectComboBoxOption("elementosForm:esportes", "Corrida");
+        dsl.selectComboBoxOption("elementosForm:esportes", "Natacao");
 
         List<WebElement> selectedsSports = sportsCombo.getAllSelectedOptions();
         Assert.assertTrue(selectedsSports.size() == 2);
 
-        driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Precisa de mais RGB na vida!");
-        Assert.assertEquals("Precisa de mais RGB na vida!", driver.findElement(By.id("elementosForm:sugestoes")).getAttribute("value"));
+        dsl.write("elementosForm:sugestoes", "Precisa de mais RGB na vida!");
+        Assert.assertEquals("Precisa de mais RGB na vida!", dsl.getFieldValue("elementosForm:sugestoes"));
 
-        driver.findElement(By.id("elementosForm:cadastrar")).click();
-
+        dsl.clickButton("elementosForm:cadastrar");
 
         Assert.assertTrue(driver.findElement(By.id("resultado")).getText().startsWith("Cadastrado!"));
 
-        Assert.assertEquals("Nome: Matheus", driver.findElement(By.id("descNome")).getText());
-        Assert.assertEquals("Sobrenome: Carvalho", driver.findElement(By.id("descSobrenome")).getText());
-        Assert.assertEquals("Sexo: Masculino", driver.findElement(By.id("descSexo")).getText());
-        Assert.assertEquals("Comida: Carne Frango Pizza", driver.findElement(By.id("descComida")).getText());
-        Assert.assertEquals("Escolaridade: superior", driver.findElement(By.id("descEscolaridade")).getText());
-        Assert.assertEquals("Esportes: Natacao Corrida", driver.findElement(By.id("descEsportes")).getText());
-        Assert.assertEquals("Sugestoes: Precisa de mais RGB na vida!", driver.findElement(By.id("descSugestoes")).getText());
+        Assert.assertEquals("Nome: Matheus", dsl.getTextComponent("descNome"));
+        Assert.assertEquals("Sobrenome: Carvalho",dsl.getTextComponent("descSobrenome"));
+        Assert.assertEquals("Sexo: Masculino", dsl.getTextComponent("descSexo"));
+        Assert.assertEquals("Comida: Carne Frango Pizza", dsl.getTextComponent("descComida"));
+        Assert.assertEquals("Escolaridade: superior", dsl.getTextComponent("descEscolaridade"));
+        Assert.assertEquals("Esportes: Natacao Corrida", dsl.getTextComponent("descEsportes"));
+        Assert.assertEquals("Sugestoes: Precisa de mais RGB na vida!", dsl.getTextComponent("descSugestoes"));
     }
 
 
