@@ -1,10 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class TesteBusinessRules {
 
@@ -56,6 +54,41 @@ public class TesteBusinessRules {
 
         driver.quit();
     }
+
+    @Test
+    public void testFieldFavoriteFood() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(300, 300));
+        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+        driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
+        driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
+        driver.findElement(By.id("elementosForm:sexo:0")).click();
+
+        driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+        driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        Alert alert = driver.switchTo().alert();
+        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
+        alert.accept();
+        driver.switchTo().defaultContent();
+        // limpando campos
+        driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+        driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
+        // novo teste
+        driver.findElement(By.id("elementosForm:comidaFavorita:1")).click();
+        driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
+
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        alert = driver.switchTo().alert();
+        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
+        alert.accept();
+
+        driver.quit();
+    }
+
 
 
 }
