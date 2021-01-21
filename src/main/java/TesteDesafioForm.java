@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -7,18 +9,26 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-import java.awt.*;
 import java.util.List;
 
 public class TesteDesafioForm {
 
+    private WebDriver driver;
+
+    @Before
+    public void initializerWebDriver() {
+        driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(300, 300));
+        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+    }
+
+    @After
+    public void finalizeWebDriver() {
+        driver.quit();
+    }
 
     @Test
     public void testeForm() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1280, 720));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
         Assert.assertEquals("Matheus", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
 
@@ -64,9 +74,6 @@ public class TesteDesafioForm {
         Assert.assertEquals("Escolaridade: superior", driver.findElement(By.id("descEscolaridade")).getText());
         Assert.assertEquals("Esportes: Natacao Corrida", driver.findElement(By.id("descEsportes")).getText());
         Assert.assertEquals("Sugestoes: Precisa de mais RGB na vida!", driver.findElement(By.id("descSugestoes")).getText());
-
-
-        driver.quit();
     }
 
 

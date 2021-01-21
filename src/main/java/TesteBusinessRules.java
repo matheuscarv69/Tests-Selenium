@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,26 +8,30 @@ import org.openqa.selenium.support.ui.Select;
 
 public class TesteBusinessRules {
 
-    @Test
-    public void testFieldName() {
-        WebDriver driver = new ChromeDriver();
+    private WebDriver driver;
+
+    @Before
+    public void initializerWebDriver() {
+        driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(300, 300));
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+    }
 
-        driver.findElement(By.id("elementosForm:cadastrar")).click();
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Nome eh obrigatorio", alert.getText());
-        alert.accept();
-
+    @After
+    public void finalizeWebDriver() {
         driver.quit();
     }
 
     @Test
-    public void testFieldSurname() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+    public void testFieldName() {
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+        Alert alert = driver.switchTo().alert();
+        Assert.assertEquals("Nome eh obrigatorio", alert.getText());
+        alert.accept();
+    }
 
+    @Test
+    public void testFieldSurname() {
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
 
         driver.findElement(By.id("elementosForm:cadastrar")).click();
@@ -34,15 +40,10 @@ public class TesteBusinessRules {
         Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
         alert.accept();
 
-        driver.quit();
     }
 
     @Test
     public void testFieldSex() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
         driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
 
@@ -52,15 +53,10 @@ public class TesteBusinessRules {
         Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
         alert.accept();
 
-        driver.quit();
     }
 
     @Test
     public void testFieldFavoriteFood() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
         driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
         driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -86,16 +82,11 @@ public class TesteBusinessRules {
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
         alert.accept();
 
-        driver.quit();
     }
 
 
     @Test
     public void testFieldSportsPracticed() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
         driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
         driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -146,7 +137,6 @@ public class TesteBusinessRules {
 
         selectOptions.deselectByVisibleText("Karate");
 
-        driver.quit();
     }
 
 
