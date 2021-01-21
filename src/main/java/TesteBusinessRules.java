@@ -90,5 +90,64 @@ public class TesteBusinessRules {
     }
 
 
+    @Test
+    public void testFieldSportsPracticed() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(300, 300));
+        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+        driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
+        driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Carvalho");
+        driver.findElement(By.id("elementosForm:sexo:0")).click();
+
+        driver.findElement(By.id("elementosForm:comidaFavorita:1")).click();
+
+        WebElement elements = driver.findElement(By.id("elementosForm:esportes"));
+        Select selectOptions = new Select(elements);
+
+        selectOptions.selectByVisibleText("Natacao");
+        selectOptions.selectByVisibleText("O que eh esporte?");
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        Alert alert = driver.switchTo().alert();
+        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
+        alert.accept();
+        driver.switchTo().defaultContent();
+
+        selectOptions.deselectByVisibleText("Natacao");
+
+        selectOptions.selectByVisibleText("Futebol");
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        alert = driver.switchTo().alert();
+        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
+        alert.accept();
+        driver.switchTo().defaultContent();
+
+        selectOptions.deselectByVisibleText("Futebol");
+
+        selectOptions.selectByVisibleText("Corrida");
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        alert = driver.switchTo().alert();
+        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
+        alert.accept();
+        driver.switchTo().defaultContent();
+
+        selectOptions.deselectByVisibleText("Corrida");
+
+        selectOptions.selectByVisibleText("Karate");
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+
+        alert = driver.switchTo().alert();
+        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
+        alert.accept();
+        driver.switchTo().defaultContent();
+
+        selectOptions.deselectByVisibleText("Karate");
+
+        driver.quit();
+    }
+
 
 }
