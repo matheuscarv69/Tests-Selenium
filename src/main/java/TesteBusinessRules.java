@@ -19,6 +19,20 @@ public class TesteBusinessRules {
         Assert.assertEquals("Nome eh obrigatorio", alert.getText());
         alert.accept();
 
+        driver.quit();
+    }
+
+    @Test
+    public void testFieldSurname() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(300, 300));
+        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
+        Alert alert = driver.switchTo().alert();
+        Assert.assertEquals("Nome eh obrigatorio", alert.getText());
+        alert.accept();
+
         driver.switchTo().defaultContent();
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Matheus");
 
