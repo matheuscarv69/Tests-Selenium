@@ -2,7 +2,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,12 +28,8 @@ public class TesteAlert {
     public void testeAlertSimples() {
         dsl.clickButton("alert");
 
-        Alert alert = driver.switchTo().alert();
-
-        String messageAlert = alert.getText();
-
+        String messageAlert = dsl.getTextAlertAccept();
         Assert.assertEquals("Alert Simples", messageAlert);
-        alert.accept();
 
         dsl.write("elementosForm:nome", messageAlert);
     }
@@ -42,52 +37,30 @@ public class TesteAlert {
     @Test
     public void testeAlertConfirm() {
         dsl.clickButton("confirm");
-        Alert alertConfirm = driver.switchTo().alert();
-        Assert.assertEquals("Confirm Simples", alertConfirm.getText());
-        alertConfirm.accept();
+        Assert.assertEquals("Confirm Simples", dsl.getTextAlertAccept());
 
-        Alert alertConfirm2 = driver.switchTo().alert();
-        Assert.assertEquals("Confirmado", alertConfirm2.getText());
-        alertConfirm2.accept();
+        Assert.assertEquals("Confirmado", dsl.getTextAlertAccept());
 
-        // Cancelar Alert
         dsl.clickButton("confirm");
-        alertConfirm = driver.switchTo().alert();
-        Assert.assertEquals("Confirm Simples", alertConfirm.getText());
-        alertConfirm.dismiss();
-
-        alertConfirm2 = driver.switchTo().alert();
-        Assert.assertEquals("Negado", alertConfirm2.getText());
-        alertConfirm2.accept();
+        Assert.assertEquals("Confirm Simples", dsl.getTextAlertDismiss());
+        Assert.assertEquals("Negado", dsl.getTextAlertAccept());
     }
 
     @Test
     public void testeAlertPrompt() {
         dsl.clickButton("prompt");
 
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Digite um numero", alert.getText());
-        alert.sendKeys("12");
-        alert.accept();
+        Assert.assertEquals("Digite um numero", dsl.getTextAlert());
+        dsl.writeTextAlertAccept("12");
 
-        Assert.assertEquals("Era 12?", alert.getText());
-        alert.accept();
-        Assert.assertEquals(":D", alert.getText());
-        alert.accept();
+        Assert.assertEquals("Era 12?", dsl.getTextAlertAccept());
+        Assert.assertEquals(":D", dsl.getTextAlertAccept());
 
         dsl.clickButton("prompt");
 
-        alert = driver.switchTo().alert();
-        Assert.assertEquals("Digite um numero", alert.getText());
-        alert.dismiss();
-
-        alert = driver.switchTo().alert();
-        Assert.assertEquals("Era null?", alert.getText());
-        alert.dismiss();
-
-        alert = driver.switchTo().alert();
-        Assert.assertEquals(":(", alert.getText());
-        alert.dismiss();
+        Assert.assertEquals("Digite um numero", dsl.getTextAlertDismiss());
+        Assert.assertEquals("Era null?", dsl.getTextAlertDismiss());
+        Assert.assertEquals(":(", dsl.getTextAlertDismiss());
     }
 
 

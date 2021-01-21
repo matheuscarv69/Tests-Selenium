@@ -2,7 +2,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,15 +26,13 @@ public class TesteFrames {
 
     @Test
     public void testFrame() {
-        driver.switchTo().frame("frame1");
+        dsl.enterFrame("frame1");
         dsl.clickButton("frameButton");
 
-        Alert alert = driver.switchTo().alert();
-        String msg = alert.getText();
+        String msg = dsl.getTextAlertAccept();
         Assert.assertEquals("Frame OK!", msg);
-        alert.accept();
 
-        driver.switchTo().defaultContent();
+        dsl.quitFrame();
         dsl.write("elementosForm:nome", msg);
     }
 }

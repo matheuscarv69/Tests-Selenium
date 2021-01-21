@@ -2,7 +2,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,19 +27,14 @@ public class TesteBusinessRules {
     @Test
     public void testFieldName() {
         dsl.clickButton("elementosForm:cadastrar");
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Nome eh obrigatorio", alert.getText());
-        alert.accept();
+        Assert.assertEquals("Nome eh obrigatorio", dsl.getTextAlertAccept());
     }
 
     @Test
     public void testFieldSurname() {
         dsl.write("elementosForm:nome", "Matheus");
         dsl.clickButton("elementosForm:cadastrar");
-
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
-        alert.accept();
+        Assert.assertEquals("Sobrenome eh obrigatorio", dsl.getTextAlertAccept());
     }
 
     @Test
@@ -48,10 +42,7 @@ public class TesteBusinessRules {
         dsl.write("elementosForm:nome", "Matheus");
         dsl.write("elementosForm:sobrenome", "Carvalho");
         dsl.clickButton("elementosForm:cadastrar");
-
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
-        alert.accept();
+        Assert.assertEquals("Sexo eh obrigatorio", dsl.getTextAlertAccept());
     }
 
     @Test
@@ -65,10 +56,10 @@ public class TesteBusinessRules {
 
         dsl.clickButton("elementosForm:cadastrar");
 
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
-        alert.accept();
-        driver.switchTo().defaultContent();
+        Assert.assertEquals("Tem certeza que voce eh vegetariano?", dsl.getTextAlertAccept());
+
+        dsl.quitFrame();
+
         // limpando campos
         dsl.clickRadioButton("elementosForm:comidaFavorita:0");
         dsl.clickRadioButton("elementosForm:comidaFavorita:3");
@@ -79,9 +70,7 @@ public class TesteBusinessRules {
 
         dsl.clickButton("elementosForm:cadastrar");
 
-        alert = driver.switchTo().alert();
-        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
-        alert.accept();
+        Assert.assertEquals("Tem certeza que voce eh vegetariano?", dsl.getTextAlertAccept());
     }
 
     @Test
@@ -97,40 +86,34 @@ public class TesteBusinessRules {
 
         dsl.clickButton("elementosForm:cadastrar");
 
-        Alert alert = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
-        alert.accept();
-        driver.switchTo().defaultContent();
+        Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
+
+        dsl.quitFrame();
 
         dsl.deselectComboBoxOption("elementosForm:esportes", "Natacao");
 
         dsl.selectComboBoxOption("elementosForm:esportes", "Futebol");
         dsl.clickButton("elementosForm:cadastrar");
 
-        alert = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
-        alert.accept();
-        driver.switchTo().defaultContent();
+        Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
+
+        dsl.quitFrame();
 
         dsl.deselectComboBoxOption("elementosForm:esportes", "Futebol");
 
         dsl.selectComboBoxOption("elementosForm:esportes", "Corrida");
         dsl.clickButton("elementosForm:cadastrar");
 
-        alert = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
-        alert.accept();
-        driver.switchTo().defaultContent();
+        Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
+        dsl.quitFrame();
 
         dsl.deselectComboBoxOption("elementosForm:esportes", "Corrida");
 
         dsl.selectComboBoxOption("elementosForm:esportes", "Karate");
         dsl.clickButton("elementosForm:cadastrar");
 
-        alert = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
-        alert.accept();
-        driver.switchTo().defaultContent();
+        Assert.assertEquals("Voce faz esporte ou nao?", dsl.getTextAlertAccept());
+        dsl.quitFrame();
 
         dsl.deselectComboBoxOption("elementosForm:esportes", "Karate");
     }

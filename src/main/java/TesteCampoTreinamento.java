@@ -1,11 +1,13 @@
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TesteCampoTreinamento {
@@ -35,58 +37,37 @@ public class TesteCampoTreinamento {
     @Test
     public void testeTextFieldSobrenome() {
         dsl.write("elementosForm:sobrenome", "Teste de escrita");
-
         Assert.assertEquals("Teste de escrita", dsl.getFieldValue("elementosForm:sobrenome"));
     }
 
     @Test
     public void testeTextArea() {
         dsl.write("elementosForm:sugestoes", "Teste de escrita");
-
         Assert.assertEquals("Teste de escrita", dsl.getFieldValue("elementosForm:sugestoes"));
     }
 
     @Test
     public void testeRadioButton() {
         dsl.clickRadioButton("elementosForm:sexo:0");
-
         Assert.assertTrue(dsl.isSelectedRadioButton("elementosForm:sexo:0"));
     }
 
     @Test
     public void testeCheckBox() {
         dsl.clickRadioButton("elementosForm:comidaFavorita:0");
-
         Assert.assertTrue(dsl.isSelectedRadioButton("elementosForm:comidaFavorita:0"));
     }
 
     @Test
     public void testeComboBox() {
         dsl.selectComboBoxOption("elementosForm:escolaridade", "Superior");
-
         Assert.assertEquals("Superior", dsl.getComboBoxOption("elementosForm:escolaridade"));
     }
 
-    // sera feito depois
     @Test
     public void testeValoresDispComboBox() {
-        WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
-        Select combo = new Select(element);
-
-        List<WebElement> listOptions = combo.getOptions();
-
-        Assert.assertEquals(8, listOptions.size());
-
-        boolean encontrou = false;
-
-        for (WebElement options : listOptions) {
-            if (options.getText().equals("Superior")) {
-                encontrou = true;
-                break;
-            }
-        }
-
-        Assert.assertTrue(encontrou);
+        Assert.assertEquals(8, dsl.getQuantityOptionsComboBox("elementosForm:escolaridade"));
+        Assert.assertTrue(dsl.verifyOptionComboBox("elementosForm:escolaridade", "Mestrado"));
     }
 
     @Test
@@ -95,14 +76,14 @@ public class TesteCampoTreinamento {
         dsl.selectComboBoxOption("elementosForm:esportes", "Corrida");
         dsl.selectComboBoxOption("elementosForm:esportes", "O que eh esporte?");
 
-        WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-        Select combo = new Select(element);
-        List<WebElement> listSelectedOptions = combo.getAllSelectedOptions();
-        Assert.assertEquals(3, listSelectedOptions.size());
+        List<String> valuesComboBox = dsl.getValuesComboBox("elementosForm:esportes");
+        Assert.assertEquals(3, valuesComboBox.size());
 
-        combo.deselectByVisibleText("Corrida");
-        listSelectedOptions = combo.getAllSelectedOptions();
-        Assert.assertEquals(2, listSelectedOptions.size());
+        dsl.deselectComboBoxOption("elementosForm:esportes", "Corrida");
+        valuesComboBox = dsl.getValuesComboBox("elementosForm:esportes");
+
+        Assert.assertEquals(2, valuesComboBox.size());
+        Assert.assertTrue(valuesComboBox.containsAll(Arrays.asList("Natacao", "O que eh esporte?")));
     }
 
     @Test
@@ -114,7 +95,6 @@ public class TesteCampoTreinamento {
     @Test
     public void testeLink() {
         dsl.clickLink("Voltar");
-
         Assert.assertEquals("Voltou!", dsl.getTextComponent("resultado"));
     }
 

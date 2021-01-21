@@ -29,13 +29,13 @@ public class TesteWindows {
     public void testWindowEasy() {
         dsl.clickButton("buttonPopUpEasy");
 
-        driver.switchTo().window("Popup");
+        dsl.enterWindow("Popup");
         dsl.write(By.tagName("textarea"), "Deu certo! Popup easy");
         String msg = driver.findElement(By.tagName("textarea")).getTagName();
         msg.concat(" da popup");
 
         driver.close();
-        driver.switchTo().window("");
+        dsl.enterWindow("");
 
         dsl.write(By.tagName("textarea"), "Janela principal\n\n" + msg);
     }
@@ -45,12 +45,12 @@ public class TesteWindows {
     public void testWindowHard() {
         dsl.clickButton("buttonPopUpHard");
 
-        driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
+        dsl.enterWindow((String) driver.getWindowHandles().toArray()[1]);
         dsl.write(By.tagName("textarea"), "Deu certo! Popup hard");
         String msg = driver.findElement(By.tagName("textarea")).getTagName();
         msg.concat(" da popup hard");
 
-        driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
+        dsl.enterWindow((String) driver.getWindowHandles().toArray()[0]);
         dsl.write(By.tagName("textarea"), "Janela principal\n\n" + msg);
     }
 }
