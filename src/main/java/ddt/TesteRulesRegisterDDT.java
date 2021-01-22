@@ -1,5 +1,6 @@
 package ddt;
 
+import core.BaseTest;
 import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,7 +19,7 @@ import static core.DriverFactory.getDriver;
 import static core.DriverFactory.killDriver;
 
 @RunWith(Parameterized.class)
-public class TesteRulesRegisterDDT {
+public class TesteRulesRegisterDDT extends BaseTest {
 
     private DSL dsl;
     private CampoTreinamentoPage page;
@@ -43,11 +44,6 @@ public class TesteRulesRegisterDDT {
         getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL();
         page = new CampoTreinamentoPage();
-    }
-
-    @After
-    public void finalizeWebDriver() {
-        killDriver();
     }
 
     @Parameterized.Parameters

@@ -17,7 +17,7 @@ public class TesteDesafioForm extends BaseTest {
         getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         page = new CampoTreinamentoPage();
     }
-    
+
 
     @Test
     public void testeForm() {

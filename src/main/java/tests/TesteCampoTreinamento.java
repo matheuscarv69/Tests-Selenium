@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import pages.CampoTreinamentoPage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,12 +18,10 @@ import static core.DriverFactory.killDriver;
 public class TesteCampoTreinamento {
 
     private DSL dsl;
-    private CampoTreinamentoPage page;
 
     @Before
     public void initializerWebDriver() {
         getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        page = new CampoTreinamentoPage();
         dsl = new DSL();
     }
 
