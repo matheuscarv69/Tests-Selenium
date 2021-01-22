@@ -18,7 +18,6 @@ public class TestSincronismo {
 
     private WebDriver driver;
     private DSL dsl;
-    private CampoTreinamentoPage page;
 
     @Before
     public void initializerWebDriver() {
@@ -28,7 +27,6 @@ public class TestSincronismo {
 //      driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
     }
 
     @After
