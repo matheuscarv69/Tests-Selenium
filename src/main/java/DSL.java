@@ -30,8 +30,11 @@ public class DSL {
 
     /********* RadioButton e Check ************/
 
+    public void clickRadioButton(By by) {
+        driver.findElement(by).click();
+    }
     public void clickRadioButton(String field_id) {
-        driver.findElement(By.id(field_id)).click();
+        clickRadioButton(By.id(field_id));
     }
 
 
