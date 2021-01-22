@@ -1,3 +1,8 @@
+package tests;
+
+import challenges.TesteBusinessRules;
+import challenges.TesteDesafioForm;
+import ddt.TesteRulesRegisterDDT;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

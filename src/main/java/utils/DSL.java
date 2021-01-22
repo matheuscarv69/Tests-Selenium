@@ -1,3 +1,5 @@
+package utils;
+
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;

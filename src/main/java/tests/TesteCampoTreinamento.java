@@ -1,9 +1,13 @@
+package tests;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CampoTreinamentoPage;
+import utils.DSL;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +29,7 @@ public class TesteCampoTreinamento {
 
     @After
     public void finalizeWebDriver() {
-//        driver.quit();
+        driver.quit();
     }
 
     @Test

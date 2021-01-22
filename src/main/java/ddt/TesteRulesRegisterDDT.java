@@ -1,3 +1,5 @@
+package ddt;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,6 +9,8 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CampoTreinamentoPage;
+import utils.DSL;
 
 import java.util.ArrayList;
 import java.util.Arrays;

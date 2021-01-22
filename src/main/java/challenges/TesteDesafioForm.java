@@ -1,3 +1,5 @@
+package challenges;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -5,6 +7,8 @@ import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CampoTreinamentoPage;
+import utils.DSL;
 
 public class TesteDesafioForm {
 
@@ -58,7 +62,7 @@ public class TesteDesafioForm {
 
         page.clickButtonCadastrar();
 
-        Assert.assertEquals("Cadastrado!",page.getResultRegister());
+        Assert.assertEquals("Cadastrado!", page.getResultRegister());
         Assert.assertEquals("Matheus", page.getNameRegister());
         Assert.assertEquals("Carvalho", page.getSurNameRegister());
         Assert.assertEquals("Masculino", page.getSexRegister());
