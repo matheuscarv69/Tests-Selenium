@@ -1,26 +1,25 @@
 package ddt;
 
+import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pages.CampoTreinamentoPage;
-import utils.DSL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
+
 @RunWith(Parameterized.class)
 public class TesteRulesRegisterDDT {
 
-    private WebDriver driver;
     private DSL dsl;
     private CampoTreinamentoPage page;
 
@@ -41,16 +40,14 @@ public class TesteRulesRegisterDDT {
 
     @Before
     public void initializerWebDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+        getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
+        page = new CampoTreinamentoPage();
     }
 
     @After
     public void finalizeWebDriver() {
-        driver.quit();
+        killDriver();
     }
 
     @Parameterized.Parameters

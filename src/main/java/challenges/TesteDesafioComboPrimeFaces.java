@@ -1,31 +1,28 @@
 package challenges;
 
+import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import utils.DSL;
+
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
 
 
 public class TesteDesafioComboPrimeFaces {
 
-    private WebDriver driver;
     private DSL dsl;
 
     @Before
     public void initializerWebDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1280, 720));
-        driver.get("https://www.primefaces.org/showcase/ui/input/oneMenu.xhtml");
-        dsl = new DSL(driver);
+        getDriver().get("https://www.primefaces.org/showcase/ui/input/oneMenu.xhtml");
+        dsl = new DSL();
     }
 
     @After
     public void finalizeWebDriver() {
-        driver.quit();
+        killDriver();
     }
 
     @Test

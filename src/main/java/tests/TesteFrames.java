@@ -1,32 +1,30 @@
 package tests;
 
+import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import utils.DSL;
+
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
 
 public class TesteFrames {
 
-    private WebDriver driver;
+
     private DSL dsl;
 
     @Before
     public void initializerWebDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300, 300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
+        getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
     }
 
     @After
     public void finalizeWebDriver() {
-        driver.quit();
+        killDriver();
     }
 
     @Test
@@ -43,7 +41,7 @@ public class TesteFrames {
 
     @Test
     public void testFrameOculto() {
-        WebElement frame = driver.findElement(By.id("frame2"));
+        WebElement frame = getDriver().findElement(By.id("frame2"));
         dsl.executeJs("window.scrollBy(0, arguments[0])", frame.getLocation().y);
 
         dsl.enterFrame("frame2");

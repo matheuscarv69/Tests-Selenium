@@ -1,35 +1,36 @@
 package tests;
 
+import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import pages.CampoTreinamentoPage;
-import utils.DSL;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
+
 public class TesteCampoTreinamento {
 
-    private WebDriver driver;
     private DSL dsl;
     private CampoTreinamentoPage page;
 
     @Before
     public void initializerWebDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(300,300));
-        driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+        getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        page = new CampoTreinamentoPage();
+        dsl = new DSL();
     }
 
     @After
     public void finalizeWebDriver() {
-        driver.quit();
+        killDriver();
     }
 
     @Test
@@ -110,19 +111,19 @@ public class TesteCampoTreinamento {
 
     @Test
     public void testJavascript() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
 //        js.executeScript("alert('Testando Js via selenium')");
         js.executeScript("document.getElementById('elementosForm:nome').value = 'Escrito via Js'");
         js.executeScript("document.getElementById('elementosForm:sobrenome').type = 'radio'");
 
-        WebElement element = driver.findElement(By.id("elementosForm:nome"));
+        WebElement element = getDriver().findElement(By.id("elementosForm:nome"));
         js.executeScript("arguments[0].style.border = arguments[1]", element, "solid 4px red");
 
     }
 
     @Test
-    public void clickButtonTable(){
-        dsl.clickButtonTable("Nome", "Maria", "Botao","elementsForm:tableUsuarios");
+    public void clickButtonTable() {
+        dsl.clickButtonTable("Nome", "Maria", "Botao", "elementsForm:tableUsuarios");
     }
 
 

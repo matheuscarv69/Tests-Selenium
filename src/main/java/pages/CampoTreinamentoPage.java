@@ -1,16 +1,16 @@
 package pages;
 
+import core.DSL;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import utils.DSL;
 
 public class CampoTreinamentoPage {
 
     private DSL dsl;
 
-    public CampoTreinamentoPage(WebDriver driver) {
-        this.dsl = new DSL(driver);
+    public CampoTreinamentoPage() {
+        dsl = new DSL();
     }
+
 
     public void setName(String name) {
         dsl.write("elementosForm:nome", name);

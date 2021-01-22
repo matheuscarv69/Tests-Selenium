@@ -1,34 +1,30 @@
 package tests;
 
+import core.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.CampoTreinamentoPage;
-import utils.DSL;
+
+import static core.DriverFactory.getDriver;
+import static core.DriverFactory.killDriver;
 
 public class TestePrimeAjax {
 
-    private WebDriver driver;
     private DSL dsl;
 
     @Before
     public void initializerWebDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1280, 720));
-        driver.get("https://www.primefaces.org/showcase/ui/ajax/basic.xhtml");
-        dsl = new DSL(driver);
+        getDriver().get("https://www.primefaces.org/showcase/ui/ajax/basic.xhtml");
+        dsl = new DSL();
     }
 
     @After
     public void finalizeWebDriver() {
-        driver.quit();
+        killDriver();
     }
 
     @Test
@@ -43,7 +39,7 @@ public class TestePrimeAjax {
          ocorrendo antes dessas ações, seria bom colocar o wait antes deles.
          **/
 
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(getDriver(), 30);
         wait.until(ExpectedConditions.textToBe(By.id("j_idt252:display"), "test"));
         Assert.assertEquals("test", dsl.getTextComponent("j_idt252:display"));
     }
