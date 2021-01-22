@@ -1,16 +1,15 @@
 package challenges;
 
+import core.BaseTest;
 import core.DSL;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import pages.CampoTreinamentoPage;
 
 import static core.DriverFactory.getDriver;
-import static core.DriverFactory.killDriver;
 
-public class TesteBusinessRules {
+public class TesteBusinessRules extends BaseTest {
 
     private DSL dsl;
     private CampoTreinamentoPage page;
@@ -20,11 +19,6 @@ public class TesteBusinessRules {
         getDriver().get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL();
         page = new CampoTreinamentoPage();
-    }
-
-    @After
-    public void finalizeWebDriver() {
-        killDriver();
     }
 
     @Test
