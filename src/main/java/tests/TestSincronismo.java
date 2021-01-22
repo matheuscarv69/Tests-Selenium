@@ -3,9 +3,12 @@ package tests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.CampoTreinamentoPage;
 import utils.DSL;
 
@@ -63,6 +66,29 @@ public class TestSincronismo {
         // Finalizacao da espera implicita
         /** Fazemos isso para retornar o funcionamento normal da aplicacao pois outros testes serão feitos **/
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void interactsButtonExplicitDelayResponse() throws InterruptedException {
+        dsl.clickButton("buttonDelay");
+
+        /**
+         * Espera explicita
+         - Usamos o WebDriverWait, ele recebe o driver e o tempo em segundos que irá esperar.
+         - O driver está configurado para esperar 30 segundos
+         **/
+
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        /**
+         * Espera explicita
+         - Essa espera irá esperar o tempo passado, até que o elemento explicitado no método "until"
+         seja carregado, se antes desse tempo ele for carregado,
+         a espera é parada e o fluxo segue, caso não seja carregado esse elemento, o erro é mostrado
+         **/
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("novoCampo")));
+
+        dsl.write("novoCampo", "Deu certo!");
     }
 
 
