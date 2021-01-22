@@ -1,3 +1,4 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class CampoTreinamentoPage {
@@ -45,12 +46,13 @@ public class CampoTreinamentoPage {
     }
 
     public void setSport(String... values) {
-        for(String value : values){
+        for (String value : values) {
             dsl.selectComboBoxOption("elementosForm:esportes", value);
         }
     }
+
     public void removeSport(String... values) {
-        for(String value : values){
+        for (String value : values) {
             dsl.deselectComboBoxOption("elementosForm:esportes", value);
         }
     }
@@ -71,36 +73,36 @@ public class CampoTreinamentoPage {
         dsl.clickButton("elementosForm:cadastrar");
     }
 
-    public boolean getResultRegister() {
-        return dsl.getTextComponent("resultado").startsWith("Cadastrado!");
+    public String getResultRegister() {
+        return dsl.getTextComponent(By.xpath("//*[@id='resultado']/span"));
     }
 
     public String getNameRegister() {
-        return dsl.getTextComponent("descNome");
+        return dsl.getTextComponent(By.xpath("//*[@id='descNome']/span"));
     }
 
     public String getSurNameRegister() {
-        return dsl.getTextComponent("descSobrenome");
+        return dsl.getTextComponent(By.xpath("//*[@id='descSobrenome']/span"));
     }
 
     public String getSexRegister() {
-        return dsl.getTextComponent("descSexo");
+        return dsl.getTextComponent(By.xpath("//*[@id='descSexo']/span"));
     }
 
     public String getFavFoodRegister() {
-        return dsl.getTextComponent("descComida");
+        return dsl.getTextComponent(By.xpath("//*[@id='descComida']/span"));
     }
 
     public String getSchoolingRegister() {
-        return dsl.getTextComponent("descEscolaridade");
+        return dsl.getTextComponent(By.xpath("//*[@id='descEscolaridade']/span"));
     }
 
     public String getSportsRegister() {
-        return dsl.getTextComponent("descEsportes");
+        return dsl.getTextComponent(By.xpath("//*[@id='descEsportes']/span"));
     }
 
     public String getSuggestionsRegister() {
-        return dsl.getTextComponent("descSugestoes");
+        return dsl.getTextComponent(By.xpath("//*[@id='descSugestoes']/span"));
     }
 
 

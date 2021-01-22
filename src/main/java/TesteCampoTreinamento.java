@@ -116,5 +116,10 @@ public class TesteCampoTreinamento {
 
     }
 
+    @Test
+    public void clickButtonTable(){
+        dsl.clickButtonTable("Nome", "Maria", "Botao","elementsForm:tableUsuarios");
+    }
+
 
 }

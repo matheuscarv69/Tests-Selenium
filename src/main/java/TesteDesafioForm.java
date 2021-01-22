@@ -58,15 +58,14 @@ public class TesteDesafioForm {
 
         page.clickButtonCadastrar();
 
-        Assert.assertTrue(page.getResultRegister());
-
-        Assert.assertEquals("Nome: Matheus", page.getNameRegister());
-        Assert.assertEquals("Sobrenome: Carvalho", page.getSurNameRegister());
-        Assert.assertEquals("Sexo: Masculino", page.getSexRegister());
-        Assert.assertEquals("Comida: Carne Frango Pizza", page.getFavFoodRegister());
-        Assert.assertEquals("Escolaridade: superior", page.getSchoolingRegister());
-        Assert.assertEquals("Esportes: Natacao Corrida", page.getSportsRegister());
-        Assert.assertEquals("Sugestoes: Precisa de mais RGB na vida!", page.getSuggestionsRegister());
+        Assert.assertEquals("Cadastrado!",page.getResultRegister());
+        Assert.assertEquals("Matheus", page.getNameRegister());
+        Assert.assertEquals("Carvalho", page.getSurNameRegister());
+        Assert.assertEquals("Masculino", page.getSexRegister());
+        Assert.assertEquals("Carne Frango Pizza", page.getFavFoodRegister());
+        Assert.assertEquals("superior", page.getSchoolingRegister());
+        Assert.assertEquals("Natacao Corrida", page.getSportsRegister());
+        Assert.assertEquals("Precisa de mais RGB na vida!", page.getSuggestionsRegister());
     }
 
 
