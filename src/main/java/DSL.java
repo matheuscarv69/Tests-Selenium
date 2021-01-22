@@ -33,10 +33,10 @@ public class DSL {
     public void clickRadioButton(By by) {
         driver.findElement(by).click();
     }
+
     public void clickRadioButton(String field_id) {
         clickRadioButton(By.id(field_id));
     }
-
 
     public boolean isSelectedRadioButton(String field_id) {
         return driver.findElement(By.id(field_id)).isSelected();
@@ -94,6 +94,12 @@ public class DSL {
         }
         return false;
     }
+
+    public void selectComboPrimeFace(String field_id, String target) {
+        clickRadioButton(By.xpath("//*[@id='" + field_id + "']//span"));
+        clickRadioButton(By.xpath("//*[@id='" + field_id + "_items']//li[.='" + target + "']"));
+    }
+
 
     /********* Botao ************/
 
