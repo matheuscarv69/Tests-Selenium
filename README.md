@@ -48,8 +48,7 @@ As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 - [JUnit](https://junit.org/junit5/)
 
 ## 😏 Status do Projeto
-
-🚧Ainda em construção🚧
+✅ Finalizado
 
 ### 👨🏻‍💻 Autor
 ---
